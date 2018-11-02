@@ -1,7 +1,7 @@
-Sykemeldingfilter
+Sykepengesoknadfilter
 =================
 
-Leser sykemeldinger fra Kafka og filtrerer de som skal til ny løsning for behandling.
+Leser søknader om sykepenger fra Kafka og filtrerer de som skal til ny løsning for behandling.
 
 ## Komme i gang
 
