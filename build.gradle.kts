@@ -1,7 +1,10 @@
 val kafkaVersion = "2.0.0"
 val confluentVersion = "5.0.0"
-val testcontainersVersion = "1.9.1"
+val ktorVersion = "1.0.0-beta-3"
+val prometheusVersion = "0.5.0"
+val orgJsonVersion = "20180813"
 
+val testcontainersVersion = "1.9.1"
 val junitJupiterVersion = "5.3.1"
 val spekVersion = "1.2.1"
 val kluentVersion = "1.41"
@@ -25,17 +28,22 @@ application {
 
 dependencies {
    compile(kotlin("stdlib"))
+   compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
 
    compile("org.apache.kafka:kafka-clients:$kafkaVersion")
    compile("org.apache.kafka:kafka-streams:$kafkaVersion")
+   compile("org.apache.kafka:kafka-streams:$kafkaVersion")
    compile("io.confluent:kafka-streams-avro-serde:$confluentVersion")
+   compile("io.prometheus:simpleclient_common:$prometheusVersion")
+   compile("io.prometheus:simpleclient_hotspot:$prometheusVersion")
+   compile("io.ktor:ktor-server-netty:$ktorVersion")
+   compile("org.json:json:$orgJsonVersion")
 
    testCompile("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
    testCompile("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
    testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
    testCompile("org.amshove.kluent:kluent:$kluentVersion")
    testCompile("org.testcontainers:kafka:$testcontainersVersion")
-   //testCompile("net.mguenther.kafka:kafka-junit:$kafkaVersion")
    testCompile("org.jetbrains.spek:spek-api:$spekVersion") {
       exclude(group = "org.jetbrains.kotlin")
    }
@@ -49,6 +57,7 @@ repositories {
    jcenter()
    mavenCentral()
    maven("http://packages.confluent.io/maven/")
+   maven("https://dl.bintray.com/kotlin/ktor")
 }
 
 java {

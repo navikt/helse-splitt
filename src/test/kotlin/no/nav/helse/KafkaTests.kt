@@ -1,7 +1,9 @@
 package no.nav.helse
 
-import org.amshove.kluent.*
+import kotlinx.coroutines.*
 import org.apache.kafka.clients.producer.*
+import org.apache.kafka.common.serialization.*
+import org.apache.kafka.streams.*
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.api.dsl.*
 import org.testcontainers.containers.*
@@ -21,21 +23,40 @@ object KafkaTests: Spek({
    group("tests requiring a running Kafka cluster") {
 
          it("sends msgs to a topic synchronously") {
-            val props = Properties().apply {
-               put("bootstrap.servers", kafka.bootstrapServers)
-               put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-               put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-            }
 
-            KafkaProducer<String, String>(props).use { producer ->
-               for (i in 1..100) {
-                  producer.send(ProducerRecord("my-topic", "this is a test $i")).get()
+            runBlocking {
+               val props = Properties().apply {
+                  put("bootstrap.servers", kafka.bootstrapServers)
+                  put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+                  put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+                  put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-test-jk")
+                  put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.bootstrapServers)
+                  put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().javaClass)
+                  put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().javaClass)
                }
-               val sendCount = producer.metrics()
-                  .filterKeys { it.name() == "record-send-total" }
-                  .values
-                  .first()
-               sendCount.metricValue() `should equal` 100.0
+
+               KafkaProducer<String, String>(props).use { producer ->
+                  val sender = launch {
+                     while (true) {
+                        val randomNr = (Math.random() * 1E6).toInt()
+                        producer.send(ProducerRecord("my-topic", "key $randomNr", "value ${randomNr}"))
+                        producer.flush()
+                        println("sent $randomNr")
+                        delay(1000)
+                     }
+                  }
+
+                  val builder = StreamsBuilder()
+                  builder.stream<String, String>("my-topic")
+                     .peek { key, value -> println("received $key -> $value") }
+                     .to("output")
+                  val topology = builder.build()
+                  KafkaStreams(topology, props).start()
+                  println(topology.describe())
+
+
+                  sender.join()
+               }
             }
 
       }
