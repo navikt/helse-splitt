@@ -4,7 +4,6 @@ val ktorVersion = "1.0.0-beta-3"
 val prometheusVersion = "0.5.0"
 val orgJsonVersion = "20180813"
 
-val testcontainersVersion = "1.9.1"
 val junitJupiterVersion = "5.3.1"
 val spekVersion = "1.2.1"
 val kluentVersion = "1.41"
@@ -43,7 +42,6 @@ dependencies {
    testCompile("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
    testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
    testCompile("org.amshove.kluent:kluent:$kluentVersion")
-   testCompile("org.testcontainers:kafka:$testcontainersVersion")
    testCompile("org.jetbrains.spek:spek-api:$spekVersion") {
       exclude(group = "org.jetbrains.kotlin")
    }
