@@ -52,7 +52,7 @@ object JsonSerdeTest: Spek({
 
 })
 
-val completeJson = "{\"id\":\"id\"," +
+const val completeJson = "{\"id\":\"id\"," +
    "\"aktorId\":\"aktorId\"," +
    "\"sykmeldingId\":\"sykmeldingId\"," +
    "\"soknadstype\":\"soknadstype\"," +
