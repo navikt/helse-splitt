@@ -1,4 +1,4 @@
-package no.nav.helse
+package no.nav.helse.streams
 
 data class Environment(
    val username: String = getRequiredEnvVar("SRVHELSE__USERNAME"),
@@ -7,7 +7,8 @@ data class Environment(
    val schemaRegistryUrl: String = getRequiredEnvVar("KAFKA_SCHEMA_REGISTRY_URL", "localhost:8081"),
    val httpPort: Int? = null,
    val navTruststorePath: String? = getEnvVar("NAV_TRUSTSTORE_PATH"),
-   val navTruststorePassword: String? = getEnvVar("NAV_TRUSTSTORE_PASSWORD")
+   val navTruststorePassword: String? = getEnvVar("NAV_TRUSTSTORE_PASSWORD"),
+   val stateDir: String? = getEnvVar("STATE_DIR")
    )
 
 private fun getRequiredEnvVar(varName: String, defaultValue: String? = null) =

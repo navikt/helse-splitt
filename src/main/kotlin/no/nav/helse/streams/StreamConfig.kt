@@ -1,6 +1,5 @@
 package no.nav.helse.streams
 
-import no.nav.helse.*
 import org.apache.kafka.clients.*
 import org.apache.kafka.clients.consumer.*
 import org.apache.kafka.common.config.*
@@ -14,14 +13,11 @@ private val log = LoggerFactory.getLogger("StreamConfig")
 
 fun streamConfig(
    appId: String,
-   bootStapServerUrl: String,
-   env: Environment,
-   stateDir: String? = null
-): Properties {
-   return Properties().apply {
+   env: Environment
+): Properties = Properties().apply {
       put(CommonClientConfigs.RETRY_BACKOFF_MS_CONFIG, 1000)
       put(CommonClientConfigs.RECONNECT_BACKOFF_MS_CONFIG , 5000)
-      put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootStapServerUrl)
+      put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, env.bootstrapServersUrl)
       put(StreamsConfig.APPLICATION_ID_CONFIG, appId)
       // TODO Using processing guarantee requires replication of 3, not possible with current single node dev environment
       //put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, "exactly_once"),
@@ -29,7 +25,7 @@ fun streamConfig(
       put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
       put(StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, LogAndFailExceptionHandler::class.java)
 
-      stateDir?.let { put(StreamsConfig.STATE_DIR_CONFIG, stateDir) }
+      env.stateDir?.let { put(StreamsConfig.STATE_DIR_CONFIG, env.stateDir) }
 
       KafkaCredential(env.username, env.password).let { credential ->
          log.info("Using user name ${credential.username} to authenticate against Kafka brokers ")
@@ -49,4 +45,4 @@ fun streamConfig(
          }
       }
    }
-}
+

@@ -18,7 +18,7 @@ object Topics {
    )
 }
 
-fun <K : Any, V : Any> StreamsBuilder.consumeTopic(topic: Topic<K, V>): KStream<K, V> {
+fun <K: Any, V: Any> StreamsBuilder.consumeTopic(topic: Topic<K, V>): KStream<K, V> {
    return stream<K, V>(
       topic.name, Consumed.with(topic.keySerde, topic.valueSerde)
    )
