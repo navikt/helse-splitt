@@ -1,12 +1,28 @@
 sudo: required
+
 language: java
+
+jdk:
+- openjdk11
+
 services:
 - docker
+
 script:
 - make bump-version
 - make
+
 after_success:
 - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 - git config user.name navikt-ci
 - git config user.email 32665735+navikt-ci@users.noreply.github.com
 - ./travis/deploy.sh
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+   directories:
+   - $HOME/.gradle/caches/
+   - $HOME/.gradle/wrapper/
