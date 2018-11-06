@@ -1,4 +1,4 @@
-APPNAME := helse-sykepengesoknadfilter
+APPNAME := sykepengesoknadfilter
 DOCKER  := docker
 GRADLE  := ./gradlew -Dorg.gradle.internal.http.socketTimeout=60000 -Dorg.gradle.internal.http.connectionTimeout=60000
 VERSION := $(shell cat ./VERSION)
@@ -18,7 +18,7 @@ docker:
 	$(DOCKER) build --pull -t navikt/$(APPNAME) -t navikt/$(APPNAME):$(VERSION) .
 
 docker-push:
-	$(DOCKER) push navikt/helse-sykepengesoknadfilter:$(VERSION)
+	$(DOCKER) push navikt/sykepengesoknadfilter:$(VERSION)
 
 bump-version:
 	sed 's/navikt\/$(APPNAME):.*/navikt\/$(APPNAME):'$$(($$(cat ./VERSION) + 1))'/' naiserator.yaml > naiserator.yaml.new && mv naiserator.yaml.new naiserator.yaml

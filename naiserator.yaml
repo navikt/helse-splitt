@@ -1,10 +1,10 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-   name: helse-sykepengesoknadfilter
+   name: sykepengesoknadfilter
    namespace: helse
 spec:
-   image: navikt/helse-sykepengesoknadfilter:1
+   image: navikt/sykepengesoknadfilter:1
    port: 8080
    team: teamhelse
    healthcheck:

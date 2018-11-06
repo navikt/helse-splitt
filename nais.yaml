@@ -1,6 +1,6 @@
-name: helse-sykepengesoknadfilter
+name: sykepengesoknadfilter
 team: teamhelse
-image: navikt/helse-sykepengesoknadfilter
+image: navikt/sykepengesoknadfilter
 replicas:
    min: 2
    max: 2
