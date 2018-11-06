@@ -1,0 +1,26 @@
+name: helse-sykepengesoknadfilter
+team: teamhelse
+image: navikt/helse-sykepengesoknadfilter
+replicas:
+   min: 2
+   max: 2
+   cpuThresholdPercentage: 90
+prometheus:
+   enabled: true
+   path: /metrics
+port: 8080
+healthcheck:
+   liveness:
+      initialDelay: 60
+      path: /isAlive
+   readiness:
+      initialDelay: 60
+      path: /isReady
+resources:
+   limits:
+      cpu: 300m
+      memory: 3072Mi
+   requests:
+      cpu: 100m
+      memory: 1000Mi
+secrets: true

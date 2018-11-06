@@ -1,0 +1,12 @@
+sudo: required
+language: java
+services:
+- docker
+script:
+- make bump-version
+- make
+after_success:
+- echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+- git config user.name navikt-ci
+- git config user.email 32665735+navikt-ci@users.noreply.github.com
+- ./travis/deploy.sh
