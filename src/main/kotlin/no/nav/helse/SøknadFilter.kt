@@ -1,5 +1,6 @@
 package no.nav.helse
 
+import io.prometheus.client.*
 import no.nav.helse.streams.*
 import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_INN
 import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_UT
@@ -11,8 +12,12 @@ class SøknadFilter {
 
    private val appId = "sykepengesoknad-filter"
    private val env: Environment = Environment()
-
    private val log = LoggerFactory.getLogger("SøknadFilter")
+
+   private val counter = Counter.build()
+      .name("mottatte-sykepengesoknader")
+      .help("Antall mottatte søknader til filtrering")
+      .register()
 
    fun start() {
       StreamConsumer(appId, Environment(), søknader()).start()
@@ -23,6 +28,7 @@ class SøknadFilter {
 
       builder.consumeTopic(SYKEPENGESØKNADER_INN)
          .peek { key, value -> log.info("Processing ${value.javaClass} with key $key") }
+         .peek { _, _ -> counter.inc() }
          .toTopic(SYKEPENGESØKNADER_UT)
 
       return KafkaStreams(builder.build(), streamConfig(appId, env))
