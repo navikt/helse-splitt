@@ -4,7 +4,7 @@ metadata:
    name: sykepengesoknadfilter
    namespace: default
 spec:
-   image: navikt/sykepengesoknadfilter:1
+   image: navikt/sykepengesoknadfilter:2
    port: 8080
    team: teamhelse
    healthcheck:
