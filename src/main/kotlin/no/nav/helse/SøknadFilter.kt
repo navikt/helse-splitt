@@ -2,6 +2,7 @@ package no.nav.helse
 
 import no.nav.helse.streams.*
 import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_INN
+import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_UT
 import org.apache.kafka.streams.*
 import org.slf4j.*
 
@@ -22,6 +23,7 @@ class SøknadFilter {
 
       builder.consumeTopic(SYKEPENGESØKNADER_INN)
          .peek { key, value -> log.info("Processing ${value.javaClass} with key $key") }
+         .toTopic(SYKEPENGESØKNADER_UT)
 
       return KafkaStreams(builder.build(), streamConfig(appId, env))
    }

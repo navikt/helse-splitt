@@ -12,9 +12,9 @@ object Topics {
    )
 
    val SYKEPENGESØKNADER_UT = Topic(
-      name = "privat-sykepengesoknad-filtrert",
+      name = "privat-sykepengebehandling",
       keySerde = Serdes.String(),
-      valueSerde = Serdes.String()
+      valueSerde = Serdes.serdeFrom(JsonSerializer(), JsonDeserializer())
    )
 }
 
