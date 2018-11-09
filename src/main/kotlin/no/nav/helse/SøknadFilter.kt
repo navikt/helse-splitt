@@ -15,7 +15,7 @@ class SøknadFilter {
    private val log = LoggerFactory.getLogger("SøknadFilter")
 
    private val counter = Counter.build()
-      .name("mottatte-sykepengesoknader")
+      .name("sykepenger_mottatte_soknader")
       .help("Antall mottatte søknader til filtrering")
       .register()
 
