@@ -6,7 +6,7 @@ metadata:
    labels:
       team: teamhelse
 spec:
-   image: navikt/sykepengesoknadfilter:7
+   image: navikt/sykepengesoknadfilter:8
    port: 8080
    team: teamhelse
    healthcheck:
