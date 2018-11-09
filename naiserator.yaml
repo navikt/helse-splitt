@@ -24,6 +24,13 @@ spec:
       min: 2
       max: 2
       cpuThresholdPercentage: 90
+   resources:
+      limits:
+         cpu: 2000m
+         memory: 1024Mi
+      requests:
+         cpu: 50m
+         memory: 128Mi
    prometheus:
       enabled: true
       path: /metrics
