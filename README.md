@@ -1,6 +1,8 @@
 Sykepengesoknadfilter
 =================
 
+[![Build Status](https://travis-ci.com/navikt/helse-sykepengesoknadfilter.svg?branch=master)](https://travis-ci.com/navikt/helse-sykepengesoknadfilter)
+
 Leser søknader om sykepenger fra Kafka og filtrerer de som skal til ny løsning for behandling.
 
 ## Komme i gang
