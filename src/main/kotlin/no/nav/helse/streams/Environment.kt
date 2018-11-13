@@ -12,6 +12,9 @@ data class Environment(
    )
 
 private fun getRequiredEnvVar(varName: String, defaultValue: String? = null) =
-   getEnvVar(varName) ?: defaultValue ?: throw RuntimeException("Missing required variable \"$varName\"")
+   getEnvVar(varName) ?: getSystemProperty(varName) ?: defaultValue ?:
+      throw RuntimeException("Missing required variable \"$varName\"")
 
 private fun getEnvVar(varName: String) = System.getenv(varName)
+
+private fun getSystemProperty(varName: String) = System.getProperty(varName)

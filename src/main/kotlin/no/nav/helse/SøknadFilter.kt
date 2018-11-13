@@ -24,14 +24,17 @@ class SøknadFilter {
    }
 
    private fun søknader(): KafkaStreams {
-      val builder = StreamsBuilder()
+      return KafkaStreams(søknadStreamsBuilder().build(), streamConfig(appId, env))
+   }
 
+   internal fun søknadStreamsBuilder(): StreamsBuilder {
+      val builder = StreamsBuilder()
       builder.consumeTopic(SYKEPENGESØKNADER_INN)
          .peek { key, value -> log.info("Processing ${value.javaClass} with key $key") }
          .peek { _, _ -> counter.inc() }
          .toTopic(SYKEPENGESØKNADER_UT)
 
-      return KafkaStreams(builder.build(), streamConfig(appId, env))
+      return builder
    }
 
 }
