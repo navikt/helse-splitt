@@ -33,7 +33,7 @@ object StreamTest: Spek({
             }
 
             val builder = SøknadFilter().søknadStreamsBuilder()
-            val input = JSONObject().append("somekey", "somevalue")
+            val input = JSONObject().append("soknadstype", "el typo").append("status", "opp og avgjort")
             TopologyTestDriver(builder.build(), config).use { testDriver ->
                testDriver.pipeInput(consumerFactory.create(SYKEPENGESØKNADER_INN.name, "nykkel", input))
                val outputRecord = testDriver.readOutput(

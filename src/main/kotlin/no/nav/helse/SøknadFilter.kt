@@ -16,6 +16,7 @@ class SøknadFilter {
 
    private val counter = Counter.build()
       .name("sykepenger_mottatte_soknader")
+      .labelNames("type", "status")
       .help("Antall mottatte søknader til filtrering")
       .register()
 
@@ -31,7 +32,7 @@ class SøknadFilter {
       val builder = StreamsBuilder()
       builder.consumeTopic(SYKEPENGESØKNADER_INN)
          .peek { key, value -> log.info("Processing ${value.javaClass} with key $key") }
-         .peek { _, _ -> counter.inc() }
+         .peek { _, value -> counter.labels(value["soknadstype"].toString(), value["status"].toString()).inc() }
          .toTopic(SYKEPENGESØKNADER_UT)
 
       return builder
