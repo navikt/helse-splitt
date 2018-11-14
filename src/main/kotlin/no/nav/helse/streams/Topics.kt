@@ -6,7 +6,7 @@ import org.apache.kafka.streams.kstream.*
 
 object Topics {
    val SYKEPENGESØKNADER_INN = Topic(
-      name = "privat-syfo-soknadSendt-v1",
+      name = "syfo-soknad-v1",
       keySerde = Serdes.String(),
       valueSerde = Serdes.serdeFrom(JsonSerializer(), JsonDeserializer())
    )
