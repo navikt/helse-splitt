@@ -31,6 +31,8 @@ before_install:
 - git clone https://github.com/navikt/github-apps-support.git
 - export PATH=`pwd`/github-apps-support/bin:$PATH
 - export INSTALLATION_TOKEN=$(generate-installation-token.sh `generate-jwt.sh ./travis/private.pem $GITHUB_APP_ID`)
+- rm "${JAVA_HOME}/lib/security/cacerts"
+- ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
 
 env:
   global:
