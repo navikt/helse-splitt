@@ -10,7 +10,7 @@ import org.slf4j.*
 
 class SøknadFilter {
 
-   private val appId = "sykepengesoknad-filter"
+   private val appId = "splitt"
    private val env: Environment = Environment()
    private val log = LoggerFactory.getLogger("SøknadFilter")
 

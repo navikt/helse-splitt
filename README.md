@@ -1,7 +1,7 @@
-Sykepengesoknadfilter
+Splitt
 =================
 
-[![Build Status](https://travis-ci.com/navikt/helse-sykepengesoknadfilter.svg?branch=master)](https://travis-ci.com/navikt/helse-sykepengesoknadfilter)
+[![Build Status](https://travis-ci.com/navikt/helse-splitt.svg?branch=master)](https://travis-ci.com/navikt/helse-splitt)
 
 Leser søknader om sykepenger fra Kafka og filtrerer de som skal til ny løsning for behandling.
 
