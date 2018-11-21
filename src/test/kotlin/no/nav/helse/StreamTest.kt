@@ -21,8 +21,8 @@ object StreamTest: Spek({
    describe("testing a topology") {
 
       beforeGroup {
-         System.setProperty("SRVFILTER_USERNAME", "bogus")
-         System.setProperty("SRVFILTER_PASSWORD", "bogus")
+         System.setProperty("SRVSPLITT_USERNAME", "bogus")
+         System.setProperty("SRVSPLITT_PASSWORD", "bogus")
       }
 
       given("topology description from the SøknadFilter app") {
