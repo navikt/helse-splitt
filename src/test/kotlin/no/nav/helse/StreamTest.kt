@@ -21,8 +21,10 @@ object StreamTest: Spek({
    describe("testing a topology") {
 
       beforeGroup {
-         System.setProperty("SRVSPLITT_USERNAME", "bogus")
-         System.setProperty("SRVSPLITT_PASSWORD", "bogus")
+         System.setProperty("KAFKA_USERNAME", "bogus")
+         System.setProperty("KAFKA_PASSWORD", "bogus")
+         System.setProperty("KAFKA_BOOTSTRAP_SERVERS", "bogus")
+         System.setProperty("KAFKA_SCHEMA_REGISTRY_URL", "bogus")
       }
 
       given("topology description from the SøknadFilter app") {
