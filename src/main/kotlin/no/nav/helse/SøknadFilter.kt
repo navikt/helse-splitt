@@ -3,7 +3,7 @@ package no.nav.helse
 import io.prometheus.client.*
 import no.nav.helse.streams.*
 import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_INN
-import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_UT
+import no.nav.helse.streams.Topics.SYKEPENGEBEHANDLING
 import org.apache.kafka.streams.*
 import org.slf4j.*
 
@@ -21,11 +21,18 @@ class SøknadFilter {
       .register()
 
    fun start() {
-      StreamConsumer(appId, Environment(), søknader()).start()
+      val env = Environment()
+      StreamConsumer(appId, søknader(), env.httpPort ?: 8080).start()
    }
 
    private fun søknader(): KafkaStreams {
-      return KafkaStreams(søknadStreamsBuilder().build(), streamConfig(appId, env))
+      return KafkaStreams(søknadStreamsBuilder().build(),
+         streamConfig(appId,
+            env.bootstrapServersUrl,
+            Pair(env.username, env.password),
+            Pair(env.navTruststorePath, env.navTruststorePassword)
+         )
+      )
    }
 
    internal fun søknadStreamsBuilder(): StreamsBuilder {
@@ -33,7 +40,7 @@ class SøknadFilter {
       builder.consumeTopic(SYKEPENGESØKNADER_INN)
          .peek { key, value -> log.info("Processing ${value.javaClass} with key $key") }
          .peek { _, value -> counter.labels(value["soknadstype"].toString(), value["status"].toString()).inc() }
-         .toTopic(SYKEPENGESØKNADER_UT)
+         .toTopic(SYKEPENGEBEHANDLING)
 
       return builder
    }

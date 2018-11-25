@@ -5,6 +5,8 @@ val prometheusVersion = "0.5.0"
 val orgJsonVersion = "20180813"
 val slf4jVersion = "1.8.0-beta2"
 
+val streamsVersion = 10
+
 val junitJupiterVersion = "5.3.1"
 val spekVersion = "1.2.1"
 val kluentVersion = "1.41"
@@ -38,6 +40,8 @@ dependencies {
    compile("io.ktor:ktor-server-netty:$ktorVersion")
    compile("org.json:json:$orgJsonVersion")
    compile("org.slf4j:slf4j-simple:$slf4jVersion")
+
+   compile("no.nav.helse:streams:$streamsVersion")
 
    testCompile("org.apache.kafka:kafka-streams-test-utils:$kafkaVersion")
    testCompile("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")

@@ -1,7 +1,7 @@
 package no.nav.helse
 
 import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_INN
-import no.nav.helse.streams.Topics.SYKEPENGESØKNADER_UT
+import no.nav.helse.streams.Topics.SYKEPENGEBEHANDLING
 import org.amshove.kluent.*
 import org.apache.kafka.streams.*
 import org.apache.kafka.streams.test.*
@@ -39,9 +39,9 @@ object StreamTest: Spek({
             TopologyTestDriver(builder.build(), config).use { testDriver ->
                testDriver.pipeInput(consumerFactory.create(SYKEPENGESØKNADER_INN.name, "nykkel", input))
                val outputRecord = testDriver.readOutput(
-                  SYKEPENGESØKNADER_UT.name,
-                  SYKEPENGESØKNADER_UT.keySerde.deserializer(),
-                  SYKEPENGESØKNADER_UT.valueSerde.deserializer()
+                  SYKEPENGEBEHANDLING.name,
+                  SYKEPENGEBEHANDLING.keySerde.deserializer(),
+                  SYKEPENGEBEHANDLING.valueSerde.deserializer()
                )
                val output = outputRecord.value()
                output.toMap() `should equal` input.toMap()
