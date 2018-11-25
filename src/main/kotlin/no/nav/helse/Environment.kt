@@ -1,4 +1,4 @@
-package no.nav.helse.streams
+package no.nav.helse
 
 data class Environment(
    val username: String = getRequiredEnvVar("KAFKA_USERNAME"),
