@@ -1,9 +1,4 @@
 val kafkaVersion = "2.0.1"
-val confluentVersion = "5.0.0"
-val ktorVersion = "1.0.0"
-val prometheusVersion = "0.5.0"
-val orgJsonVersion = "20180813"
-val slf4jVersion = "1.8.0-beta2"
 
 val streamsVersion = 10
 
@@ -32,14 +27,6 @@ application {
 dependencies {
    compile(kotlin("stdlib"))
    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
-
-   compile("org.apache.kafka:kafka-clients:$kafkaVersion")
-   compile("org.apache.kafka:kafka-streams:$kafkaVersion")
-   compile("io.prometheus:simpleclient_common:$prometheusVersion")
-   compile("io.prometheus:simpleclient_hotspot:$prometheusVersion")
-   compile("io.ktor:ktor-server-netty:$ktorVersion")
-   compile("org.json:json:$orgJsonVersion")
-   compile("org.slf4j:slf4j-simple:$slf4jVersion")
 
    compile("no.nav.helse:streams:$streamsVersion")
 
